@@ -11,15 +11,14 @@ header file you have to include into your source files.
 <pre><code>
 #include "libdirectory.h" //include the header
 #include <iostream>
-
 int main() {
-	direc::directory dir("/home/user/"); //ceate a directory object (from namespace direc) with a given directory
-	std::cout << dir.get_number_of_files(); //get the number of files and folders in the directory
-	std::cout << dir.get_file_name(8); //get the filename of the 8th file
-	dir.set_path("./documents/"); //set the path of the directory to a new value (file list is updated automaticly)
-	dir.get_path(); //get the current path of the directory
-	std::cout << dir.get_file_path(8); //get the full path of the 8th file
-	direc::directory dir2; //create an empty directory object
+	<b>direc::directory dir("/home/user/")</b>; //ceate a directory object (from namespace direc) with a given directory
+	std::cout << <b>dir.get_number_of_files()</b>; //get the number of files and folders in the directory
+	std::cout << <b>dir.get_file_name(8)</b>; //get the filename of the 8th file
+	<b>dir.set_path("./documents/")</b>; //set the path of the directory to a new value (file list is updated automaticly)
+	<b>dir.get_path()</b>; //get the current path of the directory
+	std::cout << <b>dir.get_file_path(8)</b>; //get the full path of the 8th file
+	<b>direc::directory dir2</b>; //create an empty directory object
 	return 0;
 }
 </code></pre>
@@ -32,12 +31,12 @@ Copyright 2015 DevWurm<br>
 Documentation will be offered soon. (Email me if you have any questions)
 
 ##Setup
-###Building:
+<b>Building:</b><br>
 Change into the top directory of the repository and execute
-<pre><code>make</code></pre>.
+<pre><code>make</code></pre>
 In the subfolder Binary an Object file gets compiled and in the subfolder lib a library file together with the header is
-generated. The latest source is provided on <a href='https://github.com/DevWurm/directory_library'>GitHub</a>
-###Using:
+generated. The latest source is provided on <a href="https://github.com/DevWurm/directory_library">GitHub</a><br><br>
+<b>Using:</b><br>
 Include the header file into your source file(s)
 <pre><code>#include "libdirectory.h"</code></pre>
 and add the library file to your compiling command (C++11 is required)
