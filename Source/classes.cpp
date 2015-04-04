@@ -20,15 +20,15 @@
 	
 	    Diese Datei ist Teil von order_system.
 	
-	    order_system ist Freie Software: Sie kÃ¶nnen es unter den Bedingungen
+	    order_system ist Freie Software: Sie können es unter den Bedingungen
 	    der GNU General Public License, wie von der Free Software Foundation,
-	    Version 3 der Lizenz oder (nach Ihrer Wahl) jeder spÃ¤teren
-	    verÃ¶ffentlichten Version, weiterverbreiten und/oder modifizieren.
+	    Version 3 der Lizenz oder (nach Ihrer Wahl) jeder späteren
+	    veröffentlichten Version, weiterverbreiten und/oder modifizieren.
 	
-	    order_system wird in der Hoffnung, dass es nÃ¼tzlich sein wird, aber
-	    OHNE JEDE GEWÃ„HRLEISTUNG, bereitgestellt; sogar ohne die implizite
-	    GewÃ¤hrleistung der MARKTFÃ„HIGKEIT oder EIGNUNG FÃœR EINEN BESTIMMTEN ZWECK.
-	    Siehe die GNU General Public License fÃ¼r weitere Details.
+	    order_system wird in der Hoffnung, dass es nützlich sein wird, aber
+	    OHNE JEDE GEWÄHRLEISTUNG, bereitgestellt; sogar ohne die implizite
+	    Gewährleistung der MARKTFÄHIGKEIT oder EIGNUNG FÜR EINEN BESTIMMTEN ZWECK.
+	    Siehe die GNU General Public License für weitere Details.
 	
 	    Sie sollten eine Kopie der GNU General Public License zusammen mit diesem
 	    Programm erhalten haben. Wenn nicht, siehe <http://www.gnu.org/licenses/>.
@@ -44,13 +44,17 @@
 	#include <dirent.h>
 	#include <errno.h>
 #endif
-#include "../Headers/classes.h"
+#include "classes.h"
 
 using namespace std;
 
 namespace direc {
 directory::directory() { //standard constructor (set to current directory)
+#ifdef __WIN32__
+	path = ".\\";
+#else	
 	path = "./";
+#endif
 	try {
 		update_files();
 	}
@@ -66,9 +70,15 @@ directory::directory() { //standard constructor (set to current directory)
 
 directory::directory(string in_path) { //constructor with string
 	path = in_path;
+#ifdef __WIN32__
+	if (path.at(path.length() - 1) != '\\') { //let path end with '\'
+		path += '\\';
+	}
+#else		
 	if (path.at(path.length() - 1) != '/') { //let path end with '/'
 		path += '/';
 	}
+#endif
 	try {
 		update_files();
 	}
@@ -92,9 +102,9 @@ void directory::update_files() { //update file list
 	WIN32_FIND_DATA entry; //structure with file data
 	int int_handler;
 
-	used_directory = FindFirstFile((path+'\\*').cstr(), &entry) //address first file
-	if (handler == INVALID_HANDLE_VALUE) {//Throw Error at opening stream
-		if(GetLastError == ERROR_FILE_NOT_FOUND) {
+	used_directory = FindFirstFile((path+"\\*").c_str(), &entry); //address first file
+	if (used_directory == INVALID_HANDLE_VALUE) {//Throw Error at opening stream
+		if(GetLastError() == ERROR_FILE_NOT_FOUND) {
 			number_of_files = 0;
 		}
 		else {
@@ -105,7 +115,7 @@ void directory::update_files() { //update file list
 		int filecounter = 0;
 		do {
 			files.push_back(entry.cFileName); //get current filename
-			++filecounter //increase number of files
+			++filecounter; //increase number of files
 			int_handler = FindNextFile(used_directory, &entry); //get next file
 		} while (int_handler != 0);
 		number_of_files = filecounter;
@@ -179,9 +189,15 @@ void directory::update_files() { //update file list
 
 void directory::set_path(string in_path) {//set the path
 	path = in_path;
-	if (path.at(path.length() - 1) != '/') { //let path end with '/'
-			path += '/';
+#ifdef __WIN32__
+	if (path.at(path.length() - 1) != '\\') { //let path end with '\'
+		path += '\\';
 	}
+#else		
+	if (path.at(path.length() - 1) != '/') { //let path end with '/'
+		path += '/';
+	}
+#endif
 	try {
 		update_files();
 	}
