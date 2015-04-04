@@ -37,8 +37,8 @@
 
 
 #include <string>
-#include <dirent.h>
 #include <stdlib.h>
+#include <dirent.h>
 #include <errno.h>
 #include "../Headers/classes.h"
 
@@ -80,6 +80,10 @@ directory::directory(string in_path) { //constructor with string
 
 
 void directory::update_files() { //update file list
+	files.clear();
+	number_of_files = 0;
+
+	//unix code
 	DIR *used_directory = nullptr; //pointer to target directory
 	dirent *entry = nullptr; //structure with file data
 
@@ -139,6 +143,7 @@ void directory::update_files() { //update file list
 		number_of_files = filecounter;
 	}
 	closedir(used_directory);
+#endif
 }
 
 
