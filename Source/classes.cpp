@@ -38,8 +38,12 @@
 
 #include <string>
 #include <stdlib.h>
-#include <dirent.h>
-#include <errno.h>
+#ifdef __WIN32__
+	#include <windows.h>
+#else
+	#include <dirent.h>
+	#include <errno.h>
+#endif
 #include "../Headers/classes.h"
 
 using namespace std;
@@ -82,7 +86,32 @@ directory::directory(string in_path) { //constructor with string
 void directory::update_files() { //update file list
 	files.clear();
 	number_of_files = 0;
+#ifdef __WIN32__
+	//Windows Code
+	HANDLE used_directory; //something like target directory stream
+	WIN32_FIND_DATA entry; //structure with file data
+	int int_handler;
 
+	used_directory = FindFirstFile((path+'\\*').cstr(), &entry) //address first file
+	if (handler == INVALID_HANDLE_VALUE) {//Throw Error at opening stream
+		if(GetLastError == ERROR_FILE_NOT_FOUND) {
+			number_of_files = 0;
+		}
+		else {
+			throw error(6, "Failure at opening directory");
+		}
+	}
+	else { //get all filenames
+		int filecounter = 0;
+		do {
+			files.push_back(entry.cFileName); //get current filename
+			++filecounter //increase number of files
+			int_handler = FindNextFile(used_directory, &entry); //get next file
+		} while (int_handler != 0);
+		number_of_files = filecounter;
+	}
+	FindClose(used_directory); //close directory
+#else
 	//unix code
 	DIR *used_directory = nullptr; //pointer to target directory
 	dirent *entry = nullptr; //structure with file data
