@@ -1,10 +1,10 @@
 # directory_library
-A lightweight and simple library for exploring directorys in C++ easily (show files and folers in a directory).
+A lightweight and simple multiplatform library for exploring directorys in C++ easily (show files and folers in a directory).
 With the library you get access to a simple class wich does all the directory crawling for you. You put in a path and
-get back a list of all the files and directorys in the given directory.
+get back a list of all the files and directorys in the given directory. It provides the same interface for Windows and Unix Systems.
 
 ##Librarys
-The code is compiled in one library "libdirectory.a", you need to add to your sources, together with the libdirectory.h
+The code is compiled in one library "libdirectory.a"/"libdirectory_windows.a", you need to add to your sources, together with the libdirectory.h/libdirectory_windows.h
 header file you have to include into your source files.
 
 ##How to use
@@ -32,8 +32,12 @@ Documentation will be offered soon. (Email me if you have any questions)
 
 ##Setup
 <b>Building:</b><br>
+On Windows install MinGW (components: g++, mingw32-make, ar, ranlib) and add the MinGW bin fodler to your path variable
 Change into the top directory of the repository and execute
 <pre><code>make</code></pre>
+or
+<pre><code>mingw32-make</code></pre>
+on Windows.
 In the subfolder Binary an Object file gets compiled and in the subfolder lib a library file together with the header is
 generated. The latest source is provided on <a href="https://github.com/DevWurm/directory_library">GitHub</a><br><br>
 <b>Using:</b><br>
@@ -41,6 +45,9 @@ Include the header file into your source file(s)
 <pre><code>#include "libdirectory.h"</code></pre>
 and add the library file to your compiling command (C++11 is required)
 <pre><code>g++ your.cpp source.cpp files.cpp  <b>libdirectory.a</b> -std=c++11 -o ./output</code></pre>
+or
+<pre><code>g++ your.cpp source.cpp files.cpp  <b>libdirectory_windows.a</b> -std=c++11 -o .\output.exe</code></pre>
+on Windows.
 <br>
 All the Element functions are showed in the how to use section.
 
