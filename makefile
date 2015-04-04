@@ -4,7 +4,7 @@ all:
 	g++ .\Source\classes.cpp -std=c++11 -c -o .\Binary\directory_windows.o
 	mkdir lib
 	copy .\Headers\classes.h .\lib\directory.h
-	ar rs .\lib\libdirectory_windwos.a .\Binary\directory_windows.o
+	ar rs .\lib\libdirectory_windows.a .\Binary\directory_windows.o
 	ranlib  .\lib\libdirectory_windows.a
 else	
 all:	source

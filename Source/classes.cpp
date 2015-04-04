@@ -228,4 +228,3 @@ string directory::get_file_path(int index) const {
 }
 
 }
->>>>>>> windows_support
