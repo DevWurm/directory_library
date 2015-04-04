@@ -143,7 +143,6 @@ void directory::update_files() { //update file list
 		number_of_files = filecounter;
 	}
 	closedir(used_directory);
-#endif
 }
 
 
