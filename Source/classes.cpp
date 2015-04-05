@@ -20,15 +20,15 @@
 	
 	    Diese Datei ist Teil von directory_library.
 	
-	    directory_library ist Freie Software: Sie können es unter den Bedingungen
+	    directory_library ist Freie Software: Sie kï¿½nnen es unter den Bedingungen
 	    der GNU General Public License, wie von der Free Software Foundation,
-	    Version 3 der Lizenz oder (nach Ihrer Wahl) jeder späteren
-	    veröffentlichten Version, weiterverbreiten und/oder modifizieren.
+	    Version 3 der Lizenz oder (nach Ihrer Wahl) jeder spï¿½teren
+	    verï¿½ffentlichten Version, weiterverbreiten und/oder modifizieren.
 	
-	    directory_library wird in der Hoffnung, dass es nützlich sein wird, aber
-	    OHNE JEDE GEWÄHRLEISTUNG, bereitgestellt; sogar ohne die implizite
-	    Gewährleistung der MARKTFÄHIGKEIT oder EIGNUNG FÜR EINEN BESTIMMTEN ZWECK.
-	    Siehe die GNU General Public License für weitere Details.
+	    directory_library wird in der Hoffnung, dass es nï¿½tzlich sein wird, aber
+	    OHNE JEDE GEWï¿½HRLEISTUNG, bereitgestellt; sogar ohne die implizite
+	    Gewï¿½hrleistung der MARKTFï¿½HIGKEIT oder EIGNUNG Fï¿½R EINEN BESTIMMTEN ZWECK.
+	    Siehe die GNU General Public License fï¿½r weitere Details.
 	
 	    Sie sollten eine Kopie der GNU General Public License zusammen mit diesem
 	    Programm erhalten haben. Wenn nicht, siehe <http://www.gnu.org/licenses/>.
@@ -45,8 +45,10 @@
 	#include <errno.h>
 #endif
 #include "../Headers/classes.h"
+#include "../Headers/liberror.h"
 
 using namespace std;
+using err::error;
 
 namespace direc {
 directory::directory() { //standard constructor (set to current directory)
@@ -59,11 +61,10 @@ directory::directory() { //standard constructor (set to current directory)
 		update_files();
 	}
 	catch (error &e) {
-		cout<<"An Error occured! ("<< e.get_code() << "): " << e.get_message() << endl;
 		throw e;
 	}
 	catch (...) {
-		cout << "An undefined error occured!";
+		cout << "An undefined error occurred!";
 		exit(3);
 	}
 }
@@ -83,11 +84,10 @@ directory::directory(string in_path) { //constructor with string
 		update_files();
 	}
 	catch (error &e) {
-		cout<<"An Error occured! ("<< e.get_code() << "): " << e.get_message() << endl;
 		throw e;
 	}
 	catch (...) {
-		cout << "An undefined error occured!";
+		cout << "An undefined error occurred!";
 		exit(3);
 	}
 }
@@ -202,11 +202,10 @@ void directory::set_path(string in_path) {//set the path
 		update_files();
 	}
 	catch (error &e) {
-		cout<<"An Error occured! ("<< e.get_code() << "): " << e.get_message() << endl;
 		throw e;
 	}
 	catch (...) {
-		cout << "An undefined error occured!";
+		cout << "An undefined error occurred!";
 		exit(3);
 	}
 }

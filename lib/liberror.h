@@ -3,29 +3,29 @@
 	 
 	 * Copyright 2015 DevWurm
 	
-	 * This file is part of directory_library.
+	 * This file is part of error_library.
 
-	 *  directory_library is free software: you can redistribute it and/or modify
+	 *  error_library is free software: you can redistribute it and/or modify
 	    it under the terms of the GNU General Public License as published by
 	    the Free Software Foundation, either version 3 of the License, or
 	    (at your option) any later version.
 	
-	    directory_library is distributed in the hope that it will be useful,
+	    error_library is distributed in the hope that it will be useful,
 	    but WITHOUT ANY WARRANTY; without even the implied warranty of
 	    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 	    GNU General Public License for more details.
 	
 	    You should have received a copy of the GNU General Public License
-	    along with directory_library.  If not, see <http://www.gnu.org/licenses/>.
+	    along with error_library.  If not, see <http://www.gnu.org/licenses/>.
 	
-	    Diese Datei ist Teil von directory_library.
+	    Diese Datei ist Teil von error_library.
 	
-	    directory_library ist Freie Software: Sie können es unter den Bedingungen
+	    error_library ist Freie Software: Sie können es unter den Bedingungen
 	    der GNU General Public License, wie von der Free Software Foundation,
 	    Version 3 der Lizenz oder (nach Ihrer Wahl) jeder späteren
 	    veröffentlichten Version, weiterverbreiten und/oder modifizieren.
 	
-	    directory_library wird in der Hoffnung, dass es nützlich sein wird, aber
+	    error_library wird in der Hoffnung, dass es nützlich sein wird, aber
 	    OHNE JEDE GEWÄHRLEISTUNG, bereitgestellt; sogar ohne die implizite
 	    Gewährleistung der MARKTFÄHIGKEIT oder EIGNUNG FÜR EINEN BESTIMMTEN ZWECK.
 	    Siehe die GNU General Public License für weitere Details.
@@ -34,33 +34,33 @@
 	    Programm erhalten haben. Wenn nicht, siehe <http://www.gnu.org/licenses/>.
 */
 
-#ifndef CLASSES_H_
-#define CLASSES_H_
+#ifndef ERROR_H_
+#define ERROR_H_
 
-#include <iostream>
 #include <string>
-#include <vector>
+#include <ostream>
 
-using namespace std;
+using std::string;
+using std::ostream;
 
-namespace direc {
+namespace err {
 
-class directory {
+class error {
 private:
-	string path;
-	vector<string>files;
-	int number_of_files;
-	void update_files();
+	int code;
+	string description;
 public:
-	directory();
-	directory(string in_path);
-	void set_path(string in_path);
-	string get_path() const;
-	int get_number_of_files() const;
-	string get_file_name(int index) const;
-	string get_file_path(int index) const;
+	error(int c, string m): code(c), description(m) {};
+	int get_code() const;
+	string get_description() const;
+	string get_message() const; //get a string with code and description
+	void output_error() const; //write error message to cout
+	void output_error(ostream& output); //write error message to output stream
+	friend ostream& operator<< (ostream& output, error& err_obj); //stream error to stream
 };
 
 }
 
-#endif /* CLASSES_H_ */
+
+
+#endif /* ERROR_H_ */

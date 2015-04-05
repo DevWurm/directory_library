@@ -63,13 +63,4 @@ public:
 
 }
 
-class error {
-private:
-	int code;
-	string message;
-public:
-	error(int c, string m): code(c), message(m) {};
-	int get_code() const { return code;};
-	string get_message() const {return message;};
-};
 #endif /* CLASSES_H_ */
