@@ -9,10 +9,10 @@ all:
 	ranlib  .\lib\libdirectory_windows.a
 else	
 all:	source
-	cp ./Headers/liberror.h ./lib/
+	cp ./liberror/liberror.h ./lib/
 	cp ./Headers/classes.h ./lib/
 	mv ./lib/classes.h ./lib/libdirectory.h
-	ar rs ./lib/libdirectory.a ./Binary/directory.o ./error_lib/error.o
+	ar rs ./lib/libdirectory.a ./Binary/directory.o ./liberror/error.o
 
 source:	
 	./prepare_directory.sh

@@ -35,7 +35,7 @@
 */
 
 
-
+#include <iostream>
 #include <string>
 #include <stdlib.h>
 #ifdef __WIN32__
@@ -45,7 +45,7 @@
 	#include <errno.h>
 #endif
 #include "../Headers/classes.h"
-#include "../Headers/liberror.h"
+#include "../liberror/liberror.h"
 
 using namespace std;
 using err::error;
@@ -156,13 +156,20 @@ void directory::update_files() { //update file list
 	}
 	else { //open directory succeeded
 		int filecounter = 0; //number of files in directory
+		int dircounter = 0; //number of directories in directory
 
 		do {
 			errno = 0;
-			entry = readdir(used_directory); //read next file from directory stream
-			if (entry != nullptr) { //reading from directory succeeded
-				files.push_back(entry->d_name); //add filename to file list
-				++filecounter;
+			entry = readdir(used_directory); //read next object from directory stream
+			if (entry != nullptr) { //test if reading from directory succeded
+				if ( opendir((path + entry->d_name).c_str()) != nullptr) { //object is directory
+					dirs.push_back(entry->d_name); //add filename to file list
+					++dircounter;
+				}
+				else { //object is file
+					files.push_back(entry->d_name); //add filename to file list
+					++filecounter;
+				}
 			}
 			else { //reading from directory didn't succeed
 				if (errno != 0) { //error occurred; throw errors
@@ -180,6 +187,7 @@ void directory::update_files() { //update file list
 		} while (entry != nullptr);
 
 		number_of_files = filecounter;
+		number_of_dirs = dircounter;
 	}
 	closedir(used_directory);
 #endif
@@ -224,6 +232,18 @@ string directory::get_file_name(int index) const {
 
 string directory::get_file_path(int index) const {
 	return path + files.at(index);
+}
+
+int directory::get_number_of_dirs() const {
+	return number_of_dirs;
+}
+
+string directory::get_dir_name(int index) const {
+	return dirs.at(index);
+}
+
+string directory::get_dir_path(int index) const {
+	return path + dirs.at(index);
 }
 
 }

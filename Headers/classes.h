@@ -50,6 +50,8 @@ private:
 	string path;
 	vector<string>files;
 	int number_of_files;
+	vector<string>dirs;
+	int number_of_dirs;
 	void update_files();
 public:
 	directory();
@@ -59,6 +61,9 @@ public:
 	int get_number_of_files() const;
 	string get_file_name(int index) const;
 	string get_file_path(int index) const;
+	int get_number_of_dirs() const;
+	string get_dir_name(int index) const;
+	string get_dir_path(int index) const;
 };
 
 }
