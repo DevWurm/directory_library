@@ -14,10 +14,13 @@ The code is compiled in one library "libdirectory.a"/"libdirectory_windows.a", y
 int main() {
 	<b>direc::directory dir("/home/user/")</b>; //ceate a directory object (from namespace direc) with a given directory
 	std::cout << <b>dir.get_number_of_files()</b>; //get the number of files and folders in the directory
+	std::cout << <b>dir.get_number_of_dirs()</b>; //get the number of directories and folders in the directory
 	std::cout << <b>dir.get_file_name(8)</b>; //get the filename of the 8th file
+	std::cout << <b>dir.get_dir_name(3)</b>; //get the name of the 3rd directory
 	<b>dir.set_path("./documents/")</b>; //set the path of the directory to a new value (file list is updated automaticly)
 	<b>dir.get_path()</b>; //get the current path of the directory
 	std::cout << <b>dir.get_file_path(8)</b>; //get the full path of the 8th file
+	std::cout << <b>dir.get_file_path(3)</b>; //get the full path of the 3rd directory
 	<b>direc::directory dir2</b>; //create an empty directory object
 	return 0;
 }
@@ -38,7 +41,7 @@ Change into the top directory of the repository and execute
 or
 <pre><code>mingw32-make</code></pre>
 on Windows.
-Make sure error_lib/error.o exists. On Windows delete the folders Binary and lib before building.
+Make sure liberror/error.o exists. On Windows delete the folders Binary and lib before building.
 In the subfolder Binary an Object file gets compiled and in the subfolder lib a library file together with the header is
 generated. The latest source is provided on <a href="https://github.com/DevWurm/directory_library">GitHub</a><br><br>
 <b>Using:</b><br>
@@ -60,7 +63,7 @@ directory_library throws <a href="https://github.com/DevWurm/error_library">erro
 a description how to add error_library to your project.
 
 ##Dependencies
-directory_library uses <a href="https://github.com/DevWurm/error_library">error_library</a>, which is also licensed under GPL3. For this reason the file error_lib/error.o
+directory_library uses <a href="https://github.com/DevWurm/error_library">error_library</a>, which is also licensed under GPL3. For this reason the file liberror/error.o
 should exist. If not or if you want to update error_library, run the script errorlib_update.sh (Linux only). Then there is a small probabillity, that directory_library doesn't
 work anymore (because the interface of error_library could have changed). If you are on Windows or you don't want to take the risk of a corrupted update, then take the
 error_lib/error.o from the directory_library GitHub Repository. error.o is included into libdirectory.a. If you want to use the error_library in your project, then include lib/liberror.h
