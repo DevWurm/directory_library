@@ -4,8 +4,8 @@ all:
 	g++ .\Source\classes.cpp -std=c++11 -c -o .\Binary\directory_windows.o
 	mkdir lib
 	copy .\Headers\classes.h .\lib\libdirectory.h
-	copy .\Headers\liberror.h .\lib\liberror.h
-	ar rs .\lib\libdirectory_windows.a .\Binary\directory_windows.o .\error_lib\error.o
+	copy .\liberror\liberror.h .\lib\liberror.h
+	ar rs .\lib\libdirectory_windows.a .\Binary\directory_windows.o .\liberror\error.o
 	ranlib  .\lib\libdirectory_windows.a
 else	
 all:	source

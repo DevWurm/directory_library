@@ -95,30 +95,47 @@ directory::directory(string in_path) { //constructor with string
 
 void directory::update_files() { //update file list
 	files.clear();
+	dirs.clear();
 	number_of_files = 0;
+	number_of_dirs = 0;
 #ifdef __WIN32__
 	//Windows Code
 	HANDLE used_directory; //something like target directory stream
 	WIN32_FIND_DATA entry; //structure with file data
+	DWORD entry_data;
 	int int_handler;
 
 	used_directory = FindFirstFile((path+"\\*").c_str(), &entry); //address first file
 	if (used_directory == INVALID_HANDLE_VALUE) {//Throw Error at opening stream
-		if(GetLastError() == ERROR_FILE_NOT_FOUND) {
-			number_of_files = 0;
-		}
-		else {
-			throw error(6, "Failure at opening directory");
-		}
+		throw error(6, "Failure at opening directory");
 	}
 	else { //get all filenames
-		int filecounter = 0;
-		do {
-			files.push_back(entry.cFileName); //get current filename
-			++filecounter; //increase number of files
-			int_handler = FindNextFile(used_directory, &entry); //get next file
-		} while (int_handler != 0);
-		number_of_files = filecounter;
+		if(GetLastError() == ERROR_FILE_NOT_FOUND) {
+			number_of_files = 0;
+			number_of_dirs = 0;
+		}
+		else {
+			int filecounter = 0;
+			int dircounter = 0;
+			do {
+				entry_data = GetFileAttributes((path + entry.cFileName).c_str());
+				if (entry_data == INVALID_FILE_ATTRIBUTES) {
+					throw error(6, "Failure at receiving file attributes");
+				}
+				else if (entry_data == FILE_ATTRIBUTE_DIRECTORY) {
+					dirs.push_back(entry.cFileName); //get current filename
+					++dircounter; //increase number of files
+				}
+				else {
+					files.push_back(entry.cFileName); //get current filename
+					++filecounter; //increase number of files
+				}
+				int_handler = FindNextFile(used_directory, &entry); //get next file
+			} while (int_handler != 0);
+
+			number_of_files = filecounter;
+			number_of_dirs = dircounter;
+		}
 	}
 	FindClose(used_directory); //close directory
 #else
